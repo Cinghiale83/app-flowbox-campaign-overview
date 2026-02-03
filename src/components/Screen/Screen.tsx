@@ -1,0 +1,25 @@
+import React, { ReactNode } from "react";
+import { Text, View, ViewStyle } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { styles } from "./Screen.styles";
+
+type ScreenProps = {
+  children: ReactNode;
+  style?: ViewStyle;
+};
+
+export default function Screen({ children, style }: ScreenProps) {
+  const content = React.Children.map(children, (child) => {
+    if (typeof child === "string" || typeof child === "number") {
+      return <Text>{child}</Text>;
+    }
+
+    return child;
+  });
+
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <View style={[styles.container, style]}>{content}</View>
+    </SafeAreaView>
+  );
+}
