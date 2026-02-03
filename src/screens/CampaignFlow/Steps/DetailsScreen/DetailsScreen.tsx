@@ -9,10 +9,11 @@ import { styles } from "./DetailsScreen.styles";
 
 type Params = {
   campaignId?: string;
+  title?: string;
 };
 
 export default function DetailsScreen() {
-  const { campaignId } = useLocalSearchParams<Params>();
+  const { campaignId, title } = useLocalSearchParams<Params>();
   const router = useRouter();
 
   const [name, setName] = React.useState<string>("");
@@ -48,7 +49,14 @@ export default function DetailsScreen() {
             style={styles.button}
             onPress={() => {
               const encoded = encodeURIComponent(name);
-              router.push(`/flow/${campaignId}/terms?name=${encoded}`);
+              router.push({
+                pathname: "/flow/[campaignId]/terms",
+                params: {
+                  campaignId: campaignId ?? "",
+                  name: encoded,
+                  title: title ?? "",
+                },
+              });
             }}
           />
         </View>

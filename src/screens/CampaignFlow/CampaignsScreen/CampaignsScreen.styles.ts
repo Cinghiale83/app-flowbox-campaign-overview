@@ -1,4 +1,4 @@
-import { colors, gaps, typography } from "@/styles/tokens";
+import { colors, gaps, spacing, typography } from "@/styles/tokens";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -6,8 +6,12 @@ export const styles = StyleSheet.create({
     ...typography.body14,
     color: colors.disabled,
   },
+  screen: {
+    paddingHorizontal: 0,
+  },
   listContent: {
     gap: gaps.sm,
+    paddingHorizontal: spacing.md,
     paddingBottom: gaps.lg,
   },
   errorText: {

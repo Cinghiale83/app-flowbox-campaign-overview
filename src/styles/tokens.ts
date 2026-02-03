@@ -5,9 +5,9 @@ export const colors = {
   white: "#FFFFFF",
   primary: "#190041",
   active: "#6A00FF",
-  primaryDisabled: "rgba(25,0,65,0.20)", // 20% opacity of 190041 
+  primaryDisabled: "rgba(25,0,65,0.20)",
   text: "#1E1E1E",
-  disabled: "rgba(25,0,65,0.20)", // 20% opacity of 190041 
+  disabled: "rgba(25,0,65,0.20)",
   border: "#F0EAE0",
   overlay: "rgba(0,0,0,0.35)",
   gradientEnd: "rgba(0,0,0,0.70)",
@@ -48,7 +48,6 @@ export const common = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: colors.background,
-    paddingHorizontal: spacing.md,
     paddingTop: spacing.lg,
   },
   card: {

@@ -1,8 +1,24 @@
-export const styles = {
-  trackColor: {
-    false: "#D0D0D0",
-    true: "#111111",
+import { colors, spacing, typography } from "@/styles/tokens";
+import { StyleSheet } from "react-native";
+
+const toggleBaseStyles = StyleSheet.create({
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.sm,
   },
-  thumbOn: "#FFFFFF",
-  thumbOff: "#FFFFFF",
+  label: {
+    flex: 1,
+    color: colors.text,
+    ...typography.body14,
+  },
+});
+
+export const styles = {
+  ...toggleBaseStyles,
+  switchColors: {
+    track: { true: colors.active, false: colors.primaryDisabled },
+    thumb: colors.white,
+    iosBackground: colors.primaryDisabled,
+  },
 };

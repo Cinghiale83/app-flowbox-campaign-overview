@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 export const stepStyles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: spacing.md,
   },
   title: {
     ...typography.heading,
