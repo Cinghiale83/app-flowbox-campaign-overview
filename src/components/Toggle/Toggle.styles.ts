@@ -12,6 +12,10 @@ const toggleBaseStyles = StyleSheet.create({
     color: colors.text,
     ...typography.body14,
   },
+  link: {
+    color: colors.active,
+    ...typography.body14
+  },
 });
 
 export const styles = {
