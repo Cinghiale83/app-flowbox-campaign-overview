@@ -8,6 +8,7 @@ export const styles = StyleSheet.create({
   },
   listContent: {
     gap: gaps.sm,
+    paddingBottom: gaps.lg,
   },
   errorText: {
     ...typography.body14,

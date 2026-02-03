@@ -1,11 +1,12 @@
-import { Pressable, Text } from "react-native";
+import { Pressable, StyleProp, Text, ViewStyle } from "react-native";
 import { styles } from "./Button.styles";
 
 type Props = {
   label: string;
   disabled?: boolean;
   variant?: "primary" | "secondary" | "neutral";
-  onPress?: () => null;
+  style?: StyleProp<ViewStyle>;
+  onPress?: () => void;
 };
 
 export default function Button({
@@ -13,6 +14,7 @@ export default function Button({
   disabled,
   variant = "primary",
   onPress,
+  style,
 }: Props) {
   const variantStyle =
     variant === "secondary"
@@ -26,7 +28,7 @@ export default function Button({
     <Pressable
       onPress={onPress}
       disabled={disabled}
-      style={[styles.base, variantStyle, disabled ? styles.disabled : null]}
+      style={[styles.base, variantStyle, disabled ? styles.disabled : null, style]}
       accessibilityRole="button"
       accessibilityState={{ disabled: Boolean(disabled) }}
       accessibilityLabel={`${label} button`}

@@ -14,6 +14,8 @@ export default function FlowLayout() {
                 headerBackVisible: false,
                 headerBackTitleVisible: false,
                 headerBackTitle: "",
+                headerTitleAlign: "center",
+                headerTitleContainerStyle: { flex: 1, alignItems: "center" },
                 headerLeft: () => (
                     <Pressable onPress={() => router.back()} accessibilityRole="button">
                         <Ionicons name="arrow-back" size={24} color={colors.text} />

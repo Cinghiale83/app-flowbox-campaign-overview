@@ -40,8 +40,8 @@ export const typography = {
   title18: { fontSize: 18, lineHeight: 28, fontWeight: "600" as const },
   body14: { fontSize: 14, lineHeight: 20, fontWeight: "400" as const },
   button14: { fontSize: 14, lineHeight: 20, fontWeight: "600" as const },
-  h1: { fontSize: 22, lineHeight: 28, fontWeight: "700" as const },
-  label12: { fontSize: 12, lineHeight: 16, fontWeight: "600" as const },
+  heading: { fontSize: 30, lineHeight: 38, fontWeight: "600", paragraphSpacing: 30 as const },
+  label12: { fontSize: 12, lineHeight: 16, fontWeight: "400" as const },
 } as const;
 
 export const common = StyleSheet.create({
@@ -49,7 +49,7 @@ export const common = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
     paddingHorizontal: spacing.md,
-    paddingTop: spacing.md,
+    paddingTop: spacing.lg,
   },
   card: {
     borderRadius: radius.lg,

@@ -1,3 +1,4 @@
+import { colors, typography } from "@/styles/tokens";
 import { Stack } from "expo-router";
 
 export default function RootLayout() {
@@ -6,6 +7,8 @@ export default function RootLayout() {
       screenOptions={{
         headerShadowVisible: false,
         headerTitleAlign: "left",
+        headerStyle: { backgroundColor: colors.background },
+        headerTitleStyle: { ...typography.heading },
       }}
     >
       <Stack.Screen
