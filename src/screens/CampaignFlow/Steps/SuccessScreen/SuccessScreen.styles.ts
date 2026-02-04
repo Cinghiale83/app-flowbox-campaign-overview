@@ -1,3 +1,3 @@
-import { StyleSheet } from "react-native";
+import { stepStyles } from "@/screens/CampaignFlow/Steps/stepStyles";
 
-export const styles = StyleSheet.create({});
+export const styles = {...stepStyles};
