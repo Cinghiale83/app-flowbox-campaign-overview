@@ -3,7 +3,7 @@ import Screen from "@/components/Screen";
 import { getCampaigns } from "@/services/campaigns.service";
 import type { Campaign } from "@/types/campaign.types";
 import { useNavigation, useRouter } from "expo-router";
-import React from "react";
+import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { FlatList, Text } from "react-native";
 import { styles } from "./CampaignsScreen.styles";
 
@@ -15,9 +15,9 @@ type LoadState =
 export default function CampaignsScreen() {
   const navigation = useNavigation();
   const router = useRouter();
-  const [state, setState] = React.useState<LoadState>({ status: "loading" });
+  const [state, setState] = useState<LoadState>({ status: "loading" });
 
-  const load = React.useCallback(async (): Promise<Campaign[]> => {
+  const load = useCallback(async (): Promise<Campaign[]> => {
     setState({ status: "loading" });
 
     try {
@@ -31,11 +31,11 @@ export default function CampaignsScreen() {
     }
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     load().catch(() => null);
   }, [load]);
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       title: "Campaigns",
       headerBackVisible: false,

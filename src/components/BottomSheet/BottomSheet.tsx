@@ -1,14 +1,15 @@
-import Modal from "react-native-modal";
+import { ReactNode } from "react";
 import { Text, View } from "react-native";
+import Modal from "react-native-modal";
 import { styles } from "./BottomSheet.styles";
 
 type Props = {
 	visible: boolean;
 	height?: number;
 	title?: string;
-	description: string;
+	description?: string;
 	onDismiss: () => void;
-	children?: React.ReactNode;
+	children?: ReactNode;
 };
 
 export default function BottomSheet({

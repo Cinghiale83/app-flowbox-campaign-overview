@@ -1,6 +1,6 @@
 import Stepper from "@/components/Stepper/Stepper";
 import { useNavigation } from "expo-router";
-import React, { useLayoutEffect } from "react";
+import { createElement, useLayoutEffect } from "react";
 
 type StepperHeaderParams = {
   current: number;
@@ -12,7 +12,7 @@ export default function useStepperHeader({ current, total }: StepperHeaderParams
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: () => React.createElement(Stepper, { current, total }),
+      headerTitle: () => createElement(Stepper, { current, total }),
     });
   }, [navigation, current, total]);
 }

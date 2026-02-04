@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { Children, ReactNode } from "react";
 import { Text, View, ViewStyle } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "./Screen.styles";
@@ -9,7 +9,7 @@ type ScreenProps = {
 };
 
 export default function Screen({ children, style }: ScreenProps) {
-  const content = React.Children.map(children, (child) => {
+  const content = Children.map(children, (child: ReactNode) => {
     if (typeof child === "string" || typeof child === "number") {
       return <Text>{child}</Text>;
     }
