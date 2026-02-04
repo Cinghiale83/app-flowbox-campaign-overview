@@ -2,14 +2,9 @@ import { colors, gaps, radius, spacing, typography } from "@/styles/tokens";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: colors.overlay,
+	modal: {
 		justifyContent: "flex-end",
-	},
-	backdrop: {
-		...StyleSheet.absoluteFillObject,
-		backgroundColor: colors.overlay,
+		margin: 0,
 	},
 	sheet: {
 		backgroundColor: colors.white,

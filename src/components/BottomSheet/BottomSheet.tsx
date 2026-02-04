@@ -1,4 +1,5 @@
-import { Modal, Pressable, Text, View } from "react-native";
+import Modal from "react-native-modal";
+import { Text, View } from "react-native";
 import { styles } from "./BottomSheet.styles";
 
 type Props = {
@@ -20,32 +21,21 @@ export default function BottomSheet({
 }: Props) {
 	return (
 		<Modal
-			visible={visible}
-			transparent
-			onDismiss={onDismiss}
-			style={{ height }}
-			animationType="fade"
+			isVisible={visible}
+			onBackdropPress={onDismiss}
+			onBackButtonPress={onDismiss}
+			animationIn="slideInUp"
+			animationOut="slideOutDown"
+			backdropTransitionOutTiming={0}
+			style={styles.modal}
 		>
-			<View style={styles.container}>
-				<Pressable
-					style={styles.backdrop}
-					onPress={() => {
-						onDismiss();
-						return undefined;
-					}}
-					accessibilityRole="button"
-					accessibilityLabel="Dismiss bottom sheet"
-				/>
-
-				<View style={[styles.sheet, { height }]}>
-					<View style={styles.content}>
-						<Text style={styles.title}>{title}</Text>
-						<Text style={styles.description}>{description}</Text>
-						{children}
-					</View>
+			<View style={[styles.sheet, { height }]}>
+				<View style={styles.content}>
+					<Text style={styles.title}>{title}</Text>
+					<Text style={styles.description}>{description}</Text>
+					{children}
 				</View>
 			</View>
-
 		</Modal>
 	);
 }
