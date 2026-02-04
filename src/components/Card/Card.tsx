@@ -36,7 +36,7 @@ export default function Card({ campaign, onPressJoin }: Props) {
 				<Text style={styles.title} numberOfLines={1}>
 					{campaign.title}
 				</Text>
-				<Text style={styles.description} numberOfLines={2}>
+				<Text style={styles.description} numberOfLines={3}>
 					{campaign.description}
 				</Text>
 				<Button variant="neutral" label="Join Campaign" onPress={onPressJoin} />
