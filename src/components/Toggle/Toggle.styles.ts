@@ -5,11 +5,12 @@ const toggleBaseStyles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center",
-    gap: spacing.sm,
+    justifyContent: "space-between",
+    gap: spacing.md,
   },
   label: {
     flex: 1,
-    color: colors.text,
+    color: colors.primary,
     ...typography.body14,
   },
   link: {

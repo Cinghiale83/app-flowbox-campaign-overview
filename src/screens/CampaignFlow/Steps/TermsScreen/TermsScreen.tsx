@@ -1,18 +1,17 @@
+import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
+import { Text, View } from "react-native";
+
 import BottomSheet from "@/components/BottomSheet/BottomSheet";
 import Button from "@/components/Button/Button";
 import Screen from "@/components/Screen/Screen";
 import Stepper from "@/components/Stepper/Stepper";
 import Toggle from "@/components/Toggle/Toggle";
 import { submitCampaignApplication } from "@/services/applications.service";
-import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
-import React, { useCallback, useState } from "react";
-import { Text, View } from "react-native";
+import { useLayoutEffect, useState } from "react";
 import { styles } from "./TermsScreen.styles";
 
 type Params = {
   campaignId?: string;
-  campaignName?: string;
-  name?: string;
   title?: string;
 };
 
@@ -21,58 +20,80 @@ type SubmitState =
   | { status: "submitting" }
   | { status: "error"; message: string };
 
+function toStringOrEmpty(v: string | undefined): string {
+  return v ? v.toString() : "";
+}
+
 export default function TermsScreen() {
   const navigation = useNavigation();
-  const router = useRouter()
-  const { campaignId, title } = useLocalSearchParams<Params>();
-  const campaignTitle = title?.toString() ?? "";
+  const router = useRouter();
 
-  const [termsAccepted, setTermsAccepted] = React.useState<boolean>(false);
-  const [isTermsSheetVisible, setIsTermsSheetVisible] = useState<boolean>(false);
+  const { campaignId, title } = useLocalSearchParams<Params>();
+  const campaignIdStr = toStringOrEmpty(campaignId);
+  const campaignTitle = toStringOrEmpty(title);
+
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [isTermsSheetVisible, setIsTermsSheetVisible] = useState(false);
   const [submit, setSubmit] = useState<SubmitState>({ status: "idle" });
 
   const isSubmitting = submit.status === "submitting";
+
   const progressCurrent = termsAccepted ? 3 : 2;
 
-  const closeTermsSheet = useCallback(() => {
-    setIsTermsSheetVisible(false);
-  }, []);
-
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => <Stepper current={progressCurrent} total={4} />,
     });
   }, [navigation, progressCurrent]);
 
-  const onSubmit = async (): Promise<void> => {
+  const openTermsSheet = (): true => {
+    setIsTermsSheetVisible(true);
+    return true;
+  };
+
+  const closeTermsSheet = (): true => {
+    setIsTermsSheetVisible(false);
+    return true;
+  };
+
+  const onToggleAccepted = (isAccepted: boolean): true => {
+    setTermsAccepted(isAccepted);
+    return true;
+  };
+
+  const onSubmit = async (): Promise<true> => {
+    if (!termsAccepted || isSubmitting) return true;
+
     setSubmit({ status: "submitting" });
+
     try {
       const response = await submitCampaignApplication({
-        campaignId: campaignId ?? "",
+        campaignId: campaignIdStr,
         name: campaignTitle,
       });
 
-      const status = response.ok ? "ok" : "error";
-
       if (!response.ok) {
         setSubmit({ status: "error", message: response.error });
-        return;
+        return true;
       }
 
       setSubmit({ status: "idle" });
+
       router.push({
         pathname: "/flow/[campaignId]/success",
         params: {
-          campaignId: campaignId ?? "",
+          campaignId: campaignIdStr,
           applicationId: response.applicationId,
-          status,
         },
       });
+
+      return true;
     } catch {
       setSubmit({
         status: "error",
         message: "Something went wrong. Please try again.",
       });
+      return true;
     }
   };
 
@@ -81,24 +102,19 @@ export default function TermsScreen() {
       <View style={styles.container}>
         <Text style={styles.title}>Campaign terms</Text>
         <Text style={styles.description}>
-          Make sure to read and understand the campaign Terms & Conditions.
+          Make sure to read and understand payment & platform Terms & Conditions.
         </Text>
+        <View style={styles.toggleRow}>
+          <Toggle
+            label="Accept"
+            linkText="Terms & Conditions"
+            onPress={() => openTermsSheet()}
+            value={termsAccepted}
+            onChange={(isAccepted) => onToggleAccepted(isAccepted)}
+          />
+        </View>
 
-        <Toggle
-          label="Accept"
-          linkText="Terms & Conditions"
-          onPress={() => setIsTermsSheetVisible(true)}
-          value={termsAccepted}
-          onChange={(isAccepted: boolean) => {
-            setTermsAccepted(isAccepted);
-          }}
-        />
-        <Text>Campaign Title: {campaignTitle}</Text>
-        <Text>Campaign ID: {campaignId}</Text>
-
-        {submit.status === "error" ? (
-          <Text style={styles.error}>{submit.message}</Text>
-        ) : null}
+        {submit.status === "error" ? <Text style={styles.error}>{submit.message}</Text> : null}
 
         <View style={styles.buttonContainer}>
           <Button
@@ -106,23 +122,24 @@ export default function TermsScreen() {
             variant="secondary"
             style={styles.button}
             label={isSubmitting ? "Joining…" : "Join campaign"}
-            onPress={onSubmit}
+            onPress={() => onSubmit()}
           />
         </View>
       </View>
+
       <BottomSheet
         visible={isTermsSheetVisible}
         height={320}
-        title="Terms & Conditions"
+        title="Instagram review notice"
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-        onDismiss={closeTermsSheet}
+        onDismiss={() => closeTermsSheet()}
       >
         <View style={styles.buttonContainer}>
           <Button
             style={styles.button}
             label="Close"
             variant="primary"
-            onPress={closeTermsSheet}
+            onPress={() => closeTermsSheet()}
           />
         </View>
       </BottomSheet>

@@ -14,6 +14,7 @@ export default function FlowLayout() {
                 headerBackVisible: false,
                 headerBackTitleVisible: false,
                 headerBackTitle: "",
+                headerStyle: { backgroundColor: colors.background },
                 headerTitleAlign: "center",
                 headerTitleContainerStyle: { flex: 1, alignItems: "center" },
                 headerLeft: () => (

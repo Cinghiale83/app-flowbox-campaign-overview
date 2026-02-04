@@ -36,7 +36,11 @@ export default function CampaignsScreen() {
   }, [load]);
 
   React.useLayoutEffect(() => {
-    navigation.setOptions({ title: "Campaigns" });
+    navigation.setOptions({
+      title: "Campaigns",
+      headerBackVisible: false,
+      headerLeft: () => null,
+    });
   }, [navigation]);
 
   if (state.status === "loading") {
