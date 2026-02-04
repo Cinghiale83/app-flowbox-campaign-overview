@@ -1,50 +1,42 @@
-import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { Text, View } from "react-native";
 
 import BottomSheet from "@/components/BottomSheet/BottomSheet";
 import Button from "@/components/Button/Button";
 import Screen from "@/components/Screen/Screen";
-import Stepper from "@/components/Stepper/Stepper";
 import Toggle from "@/components/Toggle/Toggle";
-import { submitCampaignApplication } from "@/services/applications.service";
-import { useLayoutEffect, useState } from "react";
+import useStepperHeader from "@/hooks/useStepperHeader";
+import useSubmitApplication from "@/hooks/useSubmitApplication";
+import { useState } from "react";
 import { styles } from "./TermsScreen.styles";
 
 type Params = {
   campaignId?: string;
+  name?: string;
   title?: string;
 };
-
-type SubmitState =
-  | { status: "idle" }
-  | { status: "submitting" }
-  | { status: "error"; message: string };
 
 function toStringOrEmpty(v: string | undefined): string {
   return v ? v.toString() : "";
 }
 
 export default function TermsScreen() {
-  const navigation = useNavigation();
   const router = useRouter();
-
-  const { campaignId, title } = useLocalSearchParams<Params>();
+  const { campaignId, name } = useLocalSearchParams<Params>();
   const campaignIdStr = toStringOrEmpty(campaignId);
-  const campaignTitle = toStringOrEmpty(title);
+  const userNameEncoded = toStringOrEmpty(name);
+  const userName = userNameEncoded ? decodeURIComponent(userNameEncoded) : "";
 
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [isTermsSheetVisible, setIsTermsSheetVisible] = useState(false);
-  const [submit, setSubmit] = useState<SubmitState>({ status: "idle" });
-
-  const isSubmitting = submit.status === "submitting";
+  const { submit, isSubmitting, submitApplication } = useSubmitApplication({
+    campaignId: campaignIdStr,
+    userName,
+  });
 
   const progressCurrent = termsAccepted ? 3 : 2;
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: () => <Stepper current={progressCurrent} total={4} />,
-    });
-  }, [navigation, progressCurrent]);
+  useStepperHeader({ current: progressCurrent, total: 4 });
 
   const openTermsSheet = (): true => {
     setIsTermsSheetVisible(true);
@@ -62,39 +54,18 @@ export default function TermsScreen() {
   };
 
   const onSubmit = async (): Promise<true> => {
-    if (!termsAccepted || isSubmitting) return true;
-
-    setSubmit({ status: "submitting" });
-
-    try {
-      const response = await submitCampaignApplication({
-        campaignId: campaignIdStr,
-        name: campaignTitle,
-      });
-
-      if (!response.ok) {
-        setSubmit({ status: "error", message: response.error });
-        return true;
-      }
-
-      setSubmit({ status: "idle" });
-
+    if (!termsAccepted) return true;
+    const result = await submitApplication();
+    if (result.ok) {
       router.push({
         pathname: "/flow/[campaignId]/success",
         params: {
           campaignId: campaignIdStr,
-          applicationId: response.applicationId,
+          applicationId: result.applicationId,
         },
       });
-
-      return true;
-    } catch {
-      setSubmit({
-        status: "error",
-        message: "Something went wrong. Please try again.",
-      });
-      return true;
     }
+    return true;
   };
 
   return (

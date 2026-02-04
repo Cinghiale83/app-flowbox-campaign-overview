@@ -1,8 +1,8 @@
 import Button from "@/components/Button/Button";
 import Input from "@/components/Input/Input";
 import Screen from "@/components/Screen/Screen";
-import Stepper from "@/components/Stepper/Stepper";
-import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
+import useStepperHeader from "@/hooks/useStepperHeader";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React from "react";
 import { KeyboardAvoidingView, Platform, Text, View } from "react-native";
 import { styles } from "./DetailsScreen.styles";
@@ -19,13 +19,8 @@ export default function DetailsScreen() {
   const [name, setName] = React.useState<string>("");
 
   const canContinue = name.trim().length > 0;
-  const navigation = useNavigation();
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: () => <Stepper current={1} total={4} />,
-    });
-  }, [navigation]);
+  useStepperHeader({ current: 1, total: 4 });
 
   return (
     <Screen>
