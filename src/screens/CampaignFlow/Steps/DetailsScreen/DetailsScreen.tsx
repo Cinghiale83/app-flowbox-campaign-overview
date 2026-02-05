@@ -1,6 +1,6 @@
-import Button from "@/components/Button/Button";
-import Input from "@/components/Input/Input";
-import Screen from "@/components/Screen/Screen";
+import Button from "@/components/Button";
+import Input from "@/components/Input";
+import Screen from "@/components/Screen";
 import useStepperHeader from "@/hooks/useStepperHeader";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
@@ -32,8 +32,8 @@ export default function DetailsScreen() {
         <Input
           label="Name"
           value={name}
-          onChangeText={(v) => {
-            setName(v);
+          onChangeText={(value: string) => {
+            setName(value);
           }}
           placeholder="Enter your name"
         />

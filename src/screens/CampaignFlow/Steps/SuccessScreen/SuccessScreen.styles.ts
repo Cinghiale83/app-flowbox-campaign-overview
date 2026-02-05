@@ -9,6 +9,8 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
   },
   button: {
+    width: "70%",
+    alignSelf: "center",
     height: 50,
   },
 });

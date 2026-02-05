@@ -7,7 +7,6 @@ export const styles = StyleSheet.create({
 		borderRadius: radius.pill,
 		backgroundColor: colors.border,
 		overflow: "hidden",
-		width: "70%",
 		alignSelf: "center",
 	},
 	fill: {

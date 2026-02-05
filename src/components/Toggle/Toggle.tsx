@@ -4,7 +4,7 @@ import { styles } from "./Toggle.styles";
 type Props = {
   label?: string;
   value: boolean;
-  onChange: (value: boolean) => void;
+  onValueChange: (value: boolean) => void;
   linkText?: string;
   onPress?: () => void;
 };
@@ -12,7 +12,7 @@ type Props = {
 export default function Toggle({
   label,
   value,
-  onChange,
+  onValueChange,
   linkText,
   onPress,
 }: Props) {
@@ -36,7 +36,7 @@ export default function Toggle({
         thumbColor={styles.switchColors.thumb}
         ios_backgroundColor={styles.switchColors.iosBackground}
         value={value}
-        onValueChange={onChange as (value: boolean) => void}
+        onValueChange={onValueChange}
       />
     </View>
   );

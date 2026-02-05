@@ -1,4 +1,4 @@
-import Stepper from "@/components/Stepper/Stepper";
+import Stepper from "@/components/Stepper";
 import { useNavigation } from "expo-router";
 import { createElement, useLayoutEffect } from "react";
 

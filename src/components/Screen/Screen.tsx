@@ -1,6 +1,6 @@
 import { Children, ReactNode } from "react";
 import { Text, View, ViewStyle } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { styles } from "./Screen.styles";
 
 type ScreenProps = {
@@ -9,6 +9,7 @@ type ScreenProps = {
 };
 
 export default function Screen({ children, style }: ScreenProps) {
+  const insets = useSafeAreaInsets();
   const content = Children.map(children, (child: ReactNode) => {
     if (typeof child === "string" || typeof child === "number") {
       return <Text>{child}</Text>;
@@ -18,8 +19,8 @@ export default function Screen({ children, style }: ScreenProps) {
   });
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={["left", "right", "bottom"]}>
+    <View style={[styles.safeArea, { paddingLeft: insets.left, paddingRight: insets.right, paddingBottom: insets.bottom }]}>
       <View style={[styles.container, style]}>{content}</View>
-    </SafeAreaView>
+    </View>
   );
 }

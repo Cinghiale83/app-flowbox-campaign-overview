@@ -6,7 +6,10 @@ module.exports = function (api) {
       [
         "module-resolver",
         {
-          alias: { "@": "./src" },
+          alias: {
+            "@": "./src",
+            "@/assets": "./assets/images",
+          },
         },
       ],
     ],

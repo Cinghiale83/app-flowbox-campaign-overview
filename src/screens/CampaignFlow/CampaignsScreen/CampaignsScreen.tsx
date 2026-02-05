@@ -63,9 +63,9 @@ export default function CampaignsScreen() {
     <Screen>
       <FlatList
         data={state.campaigns}
-        keyExtractor={(c, index) => `${c.uid}-${index}`}
+        keyExtractor={(c: Campaign, index: number) => `${c.uid}-${index}`}
         contentContainerStyle={styles.listContent}
-        renderItem={({ item }) => (
+        renderItem={({ item }: { item: Campaign }) => (
           <Card
             campaign={item}
             onPressJoin={() => {

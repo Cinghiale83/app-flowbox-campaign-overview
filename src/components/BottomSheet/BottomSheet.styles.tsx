@@ -16,11 +16,11 @@ export const styles = StyleSheet.create({
 	content: {
 		flex: 1,
 		paddingHorizontal: spacing.md,
+		paddingTop: spacing.md,
 		gap: gaps.md,
 	},
 	title: {
 		...typography.title18,
-		paddingBottom: spacing.lg,
 	},
 	description: {
 		...typography.body14,

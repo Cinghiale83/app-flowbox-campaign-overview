@@ -12,11 +12,12 @@ export default function FlowLayout() {
             screenOptions={{
                 headerShadowVisible: false,
                 headerBackVisible: false,
-                headerBackTitleVisible: false,
                 headerBackTitle: "",
                 headerStyle: { backgroundColor: colors.background },
                 headerTitleAlign: "center",
-                headerTitleContainerStyle: { flex: 1, alignItems: "center" },
+                /* Uncomment the following lines to enable animation between steps */
+                // animation: "fade", // use "none" for no animation
+                // animationDuration: 150,
                 headerLeft: () => (
                     <Pressable onPress={() => router.back()} accessibilityRole="button">
                         <Ionicons name="arrow-back" size={24} color={colors.text} />

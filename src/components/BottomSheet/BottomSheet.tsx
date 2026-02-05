@@ -32,8 +32,8 @@ export default function BottomSheet({
 		>
 			<View style={[styles.sheet, { height }]}>
 				<View style={styles.content}>
-					<Text style={styles.title}>{title}</Text>
-					<Text style={styles.description}>{description}</Text>
+					{title ? <Text style={styles.title}>{title}</Text> : null}
+					{description ? <Text style={styles.description}>{description}</Text> : null}
 					{children}
 				</View>
 			</View>

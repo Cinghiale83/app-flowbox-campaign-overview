@@ -1,5 +1,5 @@
-import Button from "@/components/Button/Button";
-import Screen from "@/components/Screen/Screen";
+import Button from "@/components/Button";
+import Screen from "@/components/Screen";
 import useStepperHeader from "@/hooks/useStepperHeader";
 import { Image } from "expo-image";
 import { useLocalSearchParams, useRouter } from "expo-router";
