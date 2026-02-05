@@ -6,6 +6,7 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <Stack
+        initialRouteName="campaigns/index"
         screenOptions={{
           headerShadowVisible: false,
           headerTitleAlign: "left",
@@ -13,6 +14,13 @@ export default function RootLayout() {
           headerTitleStyle: { ...typography.heading },
         }}
       >
+        <Stack.Screen
+          name="index"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen name="campaigns/index" />
         <Stack.Screen
           name="flow"
           options={{
